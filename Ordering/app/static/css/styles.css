@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #BCC6CC;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.text-section {
+    max-width: 50%;
+    text-align: left;
+    padding-left: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    color: #0077cc;
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 500px;
+    height: auto;
+    margin-right: 130px;
+    margin-top: 50px;
+    border-radius: 15px;
+}
+
+.description {
+    font-size: 18px;
+    color: #555;
+}
+
+
+

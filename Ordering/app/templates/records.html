@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color:#BCC6CC;  
+        font-family: Arial, sans-serif;
+    }
+    /* Container to center the content */
+    .records-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 18px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Styling the search form to appear on the right */
+    .search-container {
+        display: flex;
+        justify-content: flex-end; /* Align to the right */
+        margin-bottom: 20px;
+    }
+
+    .search-container input {
+        padding: 10px;
+        width: 250px; /* Adjust width as needed */
+        margin-right: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .search-container button {
+        padding: 10px 15px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .search-container button:hover {
+        background-color: #0056b3;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        text-align: center; /* Centers all table content */
+    }
+
+    table th, table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover {
+        background-color: #ddd;
+    }
+
+    /* Style for action buttons */
+    table td .action-btns {
+        display: flex; /* Align buttons horizontally */
+        justify-content: center;
+        gap: 8px; /* Space between buttons */
+    }
+
+    table td a {
+        padding: 6px 12px;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    a.edit-btn {
+        background-color: #28a745;
+    }
+
+    a.edit-btn:hover {
+        background-color: #218838;
+    }
+
+    a.delete-btn {
+        background-color: #dc3545;
+    }
+
+    a.delete-btn:hover {
+        background-color: #c82333;
+    }
+
+    .add-order-link {
+        display: block;
+        width: 200px;
+        margin: 30px auto;
+        text-align: center;
+        padding: 12px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .add-order-link:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<!-- Search Form -->
+<div class="search-container">
+    <form method="get" action="{% url 'view_orders' %}">
+        <input type="text" name="search" placeholder="Search" value="{{ request.GET.search }}">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div class="records-container">
+    <h2>Water Order Records</h2>
+
+    {% if orders %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Quantity</th>
+                    <th>Delivered By</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.customer.name }}</td>
+                    <td>{{ order.customer.age }}</td>
+                    <td>{{ order.customer.address }}</td>
+                    <td>{{ order.customer.phone }}</td>
+                    <td>
+                        {% for order_item in order.items.all %}
+                            {{ order_item.item.name }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for order_item in order.items.all %}
+                            {{ order_item.item.price }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for order_item in order.items.all %}
+                            {{ order_item.item.stock }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        {% for order_item in order.items.all %}
+                            {{ order_item.quantity }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ order.delivery_set.first.delivered_by }}</td>
+                    <td>
+                        <div class="action-btns">
+                            <a href="{% url 'edit_order' order.id %}" class="edit-btn">Edit</a> 
+                            <a href="{% url 'delete_order' order.id %}" class="delete-btn">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="text-align: center; font-size: 18px; color: #777;">No orders for mineral water gallon.</p>
+    {% endif %}
+
+    <a href="{% url 'add_order' %}" class="add-order-link">Add New Order</a>
+</div>
+
+{% endblock %}

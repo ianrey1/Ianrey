@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color:#BCC6CC;  
+        font-family: Arial, sans-serif;
+    }
+    .form-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+    h2 {
+        text-align: center;
+        font-size: 26px;
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: bold;
+    }
+    form {
+        display: grid;
+        gap: 15px;
+    }
+    .form-group {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        align-items: center;
+        gap: 5px;
+    }
+    .form-group label {
+        font-weight: bold;
+        font-size: 16px;
+        color: #555;
+    }
+    .form-group input,
+    .form-group select {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #007BFF;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        outline: none;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Place Mineral Water Order</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-title">Customer Information</div>
+        <div class="form-group">
+            <label for="id_name">Name:</label>
+            {{ customer_form.name.as_widget }}
+        </div>
+        <div class="form-group">
+            <label for="id_age">Age:</label>
+            {{ customer_form.age.as_widget }}
+        </div>
+        <div class="form-group">
+            <label for="id_address">Address:</label>
+            {{ customer_form.address.as_widget }}
+        </div>
+        <div class="form-group">
+            <label for="id_phone">Phone:</label>
+            {{ customer_form.phone.as_widget }}
+        </div>
+
+        {% comment %} <div class="form-title">Order Details</div> {% endcomment %}
+        {% comment %} <div class="form-group">
+            <label for="id_item">Item:</label>
+            {{ item_form.name.as_widget }}
+        </div> {% endcomment %}
+        <div class="form-group">
+            <label for="id_price">Price:</label>
+            {{ item_form.price.as_widget }}
+        </div>
+        <div class="form-group">
+            <label for="id_stock">Stock:</label>
+            {{ item_form.stock.as_widget }}
+        </div>
+        <div class="form-group">
+            <label for="id_status">Status:</label>
+            {{ order_form.status.as_widget }}
+        </div>
+        <div class="form-group">
+            <label for="id_quantity">Quantity:</label>
+            {{ order_item_form.quantity.as_widget }}
+        </div>
+        <div class="form-group">
+            <label for="id_delivered_by">Delivered By:</label>
+            {{ delivery_form.delivered_by.as_widget }}
+        </div>
+
+        <button type="submit">Add Order</button>
+    </form>
+</div>
+{% endblock %}

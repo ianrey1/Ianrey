@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<div class="container">
+    <div class="text-section">
+        <h1>Streamlined Solutions for Your Mineral Water Business</h1>
+        <p class="description">
+            Fast and easy ordering system for your mineral water business Our POS system is designed to make inventory tracking easy and transaction processing efficient. “Every gallon is a 20-liter in high-quality mineral water, guaranteeing customer satisfaction always.”
+        </p>
+        <p><a href="{% url 'records' %}">View Orders</a></p>
+    </div>
+    <img src="{% static 'images/water-gallon.png' %}" alt="Mineral Water Gallon">
+</div>
+{% endblock %}
